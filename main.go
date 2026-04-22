@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/boltx/internal/search"
 	"os"
+
+	"github.com/boltx/internal/search"
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Please enter a command.")
+		fmt.Println("Please enter a command. \nUsage: boltx search <query>")
 		return
 
 	} else if len(os.Args) < 3 {
-		fmt.Println("Please enter a query.")
+		fmt.Println("Please enter a query. \nUsage: boltx search <query>")
 		return
 
 	}
