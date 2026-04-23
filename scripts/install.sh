@@ -48,7 +48,7 @@ fi
 
 echo "Using release tag: $TAG"
 
-URL="https://raw.githubusercontent.com/Tomdabom27/BoltX/main/scripts/install.sh"
+URL="https://github.com/$REPO/releases/latest/download/boltx"
 
 TMP="/tmp/boltx"
 
