@@ -58,7 +58,7 @@ fi
 echo "Downloading from:"
 echo "$URL"
 
-TMP="$(mktemp -t boltx)"
+TMP="$(mktemp -t boltx.XXXXXX)"
 
 if ! curl -L "$URL" -o "$TMP"; then
   echo "Download failed."
