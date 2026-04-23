@@ -21,7 +21,7 @@
 
 ### Prebuilt Binaries (Recommended)
 
-Download the latest release for your platform from the [Releases](https://github.com/boltx/boltx/releases) page.
+Download the latest release for your platform from the [Releases](https://github.com/Tomdabom27/boltx/releases) page.
 
 **Linux (amd64)**
 ```bash
@@ -43,10 +43,26 @@ curl -L https://github.com/Tomdabom27/BoltX/releases/download/Apple-intel/boltx 
 chmod +x boltx
 sudo mv boltx /usr/local/bin/
 ```
+> **Note:**
+> On macOS, `~/.local/bin` isn’t always included in your `PATH` by default. If it’s missing, your shell won’t be able to find `boltx` after installation.
+>
+> Add it with:
+>
+> `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc`
+>
+> Then restart your terminal or run `source ~/.zshrc` to apply the change.
+
+> [!WARNING]
+> macOS may block the binary on first run because it is not signed.
+>
+> If you see “cannot be opened because the developer cannot be verified”, run:
+>
+> `xattr -d com.apple.quarantine /usr/local/bin/boltx`
+
 
 **Windows (amd64)**
 
-```bash
+```powershell
 New-Item -ItemType Directory -Path "C:\Tools" -Force
 Invoke-WebRequest "https://github.com/Tomdabom27/BoltX/releases/download/Windows/boltx.exe" -OutFile "C:\Tools\boltx.exe"
 $path = [Environment]::GetEnvironmentVariable("Path","User"); [Environment]::SetEnvironmentVariable("Path", "$path;C:\Tools", "User")
@@ -85,16 +101,18 @@ boltx <command> <query>
 |---|---|
 | `search <query>` | Recursively search for files matching the query |
 
+> Note:
+> More commands are coming soon
+
 ### Examples
 
 **Basic search:**
 ```
 $ boltx search main
 Searching for "main"
-Found 3 results:
+Found 2 results:
 - ./main.go
 - ./cmd/main_test.go
-- ./internal/mainutil/helpers.go
 ```
 
 **Fuzzy match — approximate spelling:**

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/boltx/internal/search"
+	"github.com/Tomdabom27/boltx/internal/search"
 )
 
 func main() {

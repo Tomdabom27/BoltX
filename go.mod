@@ -1,4 +1,4 @@
-module github.com/boltx
+module github.com/Tomdabom27/boltx
 
 go 1.26.2
 
