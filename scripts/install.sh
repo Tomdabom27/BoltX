@@ -15,7 +15,12 @@ echo "ARCH: $ARCH"
 case "$OS" in
   Linux*) OS="Linux" ;;
   Darwin*) OS="Darwin" ;;
-  MINGW*|MSYS*|CYGWIN*) OS="Windows" ;;
+  MINGW*|MSYS*|CYGWIN*)
+    echo "Windows is not supported in this installer."
+    echo "Use the PowerShell installer instead:"
+    echo "irm https://raw.githubusercontent.com/Tomdabom27/BoltX/main/scripts/install.ps1 | iex"
+    exit 1
+    ;;
   *)
     echo "Unsupported OS: $OS"
     exit 1
@@ -32,27 +37,28 @@ case "$ARCH" in
     ;;
 esac
 
-# Map to YOUR release names
+# Build URL based on YOUR release structure
 if [ "$OS" = "Linux" ]; then
-  TAG="Linux"
+  URL="https://github.com/$REPO/releases/download/Linux/boltx"
+  INSTALL_DIR="/usr/local/bin"
+
 elif [ "$OS" = "Darwin" ] && [ "$ARCH" = "arm64" ]; then
-  TAG="Apple-silicon"
+  URL="https://github.com/$REPO/releases/download/Apple-silicon/boltx"
+  INSTALL_DIR="/usr/local/bin"
+
 elif [ "$OS" = "Darwin" ] && [ "$ARCH" = "amd64" ]; then
-  TAG="Apple-intel"
-elif [ "$OS" = "Windows" ]; then
-  TAG="Windows"
+  URL="https://github.com/$REPO/releases/download/Apple-intel/boltx"
+  INSTALL_DIR="/usr/local/bin"
+
 else
   echo "No matching release for $OS $ARCH"
   exit 1
 fi
 
-echo "Using release tag: $TAG"
+echo "Downloading from:"
+echo "$URL"
 
-URL="https://github.com/$REPO/releases/latest/download/boltx"
-
-TMP="/tmp/boltx"
-
-echo "Downloading from: $URL"
+TMP="$(mktemp -t boltx)"
 
 if ! curl -L "$URL" -o "$TMP"; then
   echo "Download failed."
@@ -61,19 +67,8 @@ fi
 
 chmod +x "$TMP"
 
-# Install location
-if [ "$OS" = "Windows" ]; then
-  INSTALL_DIR="$HOME/bin"
-  mkdir -p "$INSTALL_DIR"
-  mv "$TMP" "$INSTALL_DIR/boltx.exe"
-
-  echo ""
-  echo "Add this to PATH if needed:"
-  echo 'export PATH="$HOME/bin:$PATH"'
-else
-  INSTALL_DIR="/usr/local/bin"
-  sudo mv "$TMP" "$INSTALL_DIR/$BIN_NAME"
-fi
+echo "Installing to: $INSTALL_DIR"
+sudo mv "$TMP" "$INSTALL_DIR/$BIN_NAME"
 
 echo ""
 echo "BoltX installed successfully!"
